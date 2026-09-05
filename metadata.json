@@ -1,0 +1,6 @@
+{
+  "name": "LedgerTrue — Real-Time Balance State & Multi-Channel Reconciliation Engine",
+  "description": "Deterministic transaction state machine, real-time multi-rail event stream visualization on /events, MSME Financial Distress Early-Warning Engine, and Razorpay-grade Firebase Authentication.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

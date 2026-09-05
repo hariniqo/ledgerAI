@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "users": {
+      "path": "users/{userId}",
+      "fields": {
+        "uid": { "type": "string", "required": true },
+        "email": { "type": "string", "required": false },
+        "displayName": { "type": "string", "required": false },
+        "role": { "type": "string", "required": false },
+        "photoURL": { "type": "string", "required": false },
+        "createdAt": { "type": "string", "required": false },
+        "lastLoginAt": { "type": "string", "required": false }
+      },
+      "subcollections": {
+        "watchlist": {
+          "path": "watchlist/{msmeId}",
+          "fields": {
+            "msmeId": { "type": "string", "required": true },
+            "companyName": { "type": "string", "required": true },
+            "riskTier": { "type": "string", "required": true },
+            "addedAt": { "type": "string", "required": true }
+          }
+        }
+      }
+    }
+  }
+}
