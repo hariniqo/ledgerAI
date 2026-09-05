@@ -1,20 +1,55 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+<h1>LedgerTrue</h1>
+<p><b>A real-time financial state & reconciliation engine that turns conflicting, duplicate, and out-of-order payment events into one provably-consistent, explainable balance.</b></p>
+<p><i>Banks think balance is subtraction. We treat it as a replayable proof.</i></p>
 </div>
 
-# Run and deploy your AI Studio app
+---
 
-This contains everything you need to run your app locally.
+This contains everything you need to run LedgerTrue locally.
 
-View your app in AI Studio: https://ai.studio/apps/8811af83-a9f9-4275-9156-7c503dfe758c
+## What it does
+
+Behind every "balance" number, multiple independent systems — bank core, payment gateway, UPI switch, merchant, card network — update asynchronously. When two payments race against a balance that hasn't caught up yet, both can look successful, until reconciliation later reveals the truth. That's the **Ghost Balance** problem.
+
+LedgerTrue never mutates a balance field. Every transaction event is appended to an immutable event log, moves through an explicit state machine (`INITIATED → PROCESSING → SUCCESS/FAILED/UNKNOWN → SETTLED/RECONCILE → REVERSED/VERIFIED`), and the current balance is always **derived**, not stored — a fold/replay over the log producing both a booked balance and a real-time available balance.
+
+Feed it 10,000 chaotic, duplicate, out-of-order events, and it returns one consistent, reproducible, explainable final state.
+
+## Tech Stack
+
+- **Frontend:** React + Socket.io
+- **Backend:** Node.js / Express (ingestion API + reconciliation worker)
+- **Database:** MongoDB (immutable event store + double-entry ledger)
+- **Queue:** Redis Streams
+- **AI (explainability only):** Claude API — generates plain-English audit notes; never decides which transactions are honored
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js, MongoDB, Redis
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+
+2. Set the following in [.env.local](.env.local):
+   - `MONGODB_URI` — your MongoDB connection string
+   - `REDIS_URL` — your Redis connection string
+   - `CLAUDE_API_KEY` — your Claude API key
+   - `JWT_SECRET` — any secret string for the operator dashboard
+
 3. Run the app:
    `npm run dev`
+
+4. Run the invariant-check test suite (proves sum of debits = sum of credits):
+   `npm run test:invariant`
+
+5. Trigger a demo scenario (duplicates, out-of-order events, the 10,000-event chaos batch):
+   `npm run inject:chaos`
+
+## Demo Scenario
+
+Priya's account shows ₹20,000. Three payment apps each get a `SUCCESS` response for ₹15,000, ₹10,000, and ₹8,000 — ₹33,000 total against a ₹20,000 balance. LedgerTrue settles the first to lock in and rejects the other two with an explicit `INSUFFICIENT_AVAILABLE_BALANCE` reason — no silent overdraft, fully reproducible on replay.
+
+## License
+
+MIT
