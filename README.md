@@ -2,8 +2,8 @@
 <h1>🧾 LedgerTrue</h1>
 <p><b>A real-time financial state & reconciliation engine that turns conflicting, duplicate, and out-of-order payment events into one provably-consistent, explainable balance.</b></p>
 <p><i>💡 Banks think balance is subtraction. We treat it as a replayable proof.</i></p>
+🔗 Live demo: https://6a9beb44264b65717d9369eb--sparkling-pudding-9e271d.netlify.app/ · 📽️ Video walkthrough: add link
 
-🔗 **Live demo:** [https://6a9beb44264b65717d9369eb--sparkling-pudding-9e271d.netlify.app/]([https://ledgertrue.onrender.com](https://6a9beb44264b65717d9369eb--sparkling-pudding-9e271d.netlify.app/)) &nbsp;·&nbsp; 📽️ **Video walkthrough:** _add link_
 </div>
 
 ---
